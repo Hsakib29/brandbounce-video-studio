@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
-            <Logo />
+            <Logo variant="wordmark" />
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               Precise edits. Powerful storytelling. A dedicated video editing studio for creators, brands, and educators.
             </p>
