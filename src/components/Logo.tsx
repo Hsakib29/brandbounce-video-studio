@@ -20,7 +20,7 @@ export function Logo({ variant = "icon" }: { variant?: Variant }) {
   }
 
   if (variant === "wordmark") {
-    return <img src={text} alt="BrandBounce" className="h-20 md:h-24 object-contain" height={80} />;
+    return <img src={text} alt="BrandBounce" className="h-20 md:h-24 object-contain" height={96} />;
   }
 
   // scroll-morph: wordmark at top, icon after scrolling
