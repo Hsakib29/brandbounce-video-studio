@@ -15,7 +15,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/"><Logo /></Link>
+        <Link to="/" aria-label="BrandBounce home"><Logo variant="scroll-morph" /></Link>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           {nav.map(n => (
             <Link key={n.to} to={n.to} activeProps={{ className: "text-foreground" }} className="hover:text-foreground transition-colors">

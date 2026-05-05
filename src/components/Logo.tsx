@@ -1,13 +1,45 @@
+import { useEffect, useState } from "react";
 import icon from "@/assets/logo-icon.png";
 import text from "@/assets/logo-text.png";
 
-export function Logo({ variant = "full" }: { variant?: "full" | "icon" }) {
+type Variant = "icon" | "wordmark" | "scroll-morph";
+
+export function Logo({ variant = "icon" }: { variant?: Variant }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (variant !== "scroll-morph") return;
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [variant]);
+
+  if (variant === "icon") {
+    return <img src={icon} alt="BrandBounce" className="h-9 w-9 object-contain" width={36} height={36} />;
+  }
+
+  if (variant === "wordmark") {
+    return <img src={text} alt="BrandBounce" className="h-6 md:h-7 object-contain" height={28} />;
+  }
+
+  // scroll-morph: wordmark at top, icon after scrolling
   return (
-    <div className="flex items-center gap-2">
-      <img src={icon} alt="BrandBounce" className="h-8 w-8 object-contain" width={32} height={32} />
-      {variant === "full" && (
-        <img src={text} alt="BrandBounce" className="h-5 object-contain hidden sm:block" height={20} />
-      )}
+    <div className="relative h-9 w-32 md:w-36">
+      <img
+        src={text}
+        alt="BrandBounce"
+        className={`absolute left-0 top-1/2 -translate-y-1/2 h-6 md:h-7 object-contain transition-all duration-500 ease-out ${
+          scrolled ? "opacity-0 -translate-x-2 scale-95" : "opacity-100 translate-x-0 scale-100"
+        }`}
+      />
+      <img
+        src={icon}
+        alt="BrandBounce"
+        className={`absolute left-0 top-1/2 -translate-y-1/2 h-9 w-9 object-contain transition-all duration-500 ease-out ${
+          scrolled ? "opacity-100 translate-x-0 scale-100" : "opacity-0 translate-x-2 scale-90"
+        }`}
+      />
     </div>
   );
 }
