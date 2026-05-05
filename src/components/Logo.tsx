@@ -20,16 +20,16 @@ export function Logo({ variant = "icon" }: { variant?: Variant }) {
   }
 
   if (variant === "wordmark") {
-    return <img src={text} alt="BrandBounce" className="h-10 md:h-12 object-contain" height={48} />;
+    return <img src={text} alt="BrandBounce" className="h-16 md:h-20 object-contain" height={80} />;
   }
 
   // scroll-morph: wordmark at top, icon after scrolling
   return (
-    <div className="relative h-10 w-44 md:h-12 md:w-56">
+    <div className="relative h-14 w-56 md:h-16 md:w-72">
       <img
         src={text}
         alt="BrandBounce"
-        className={`absolute left-0 top-1/2 -translate-y-1/2 h-10 md:h-12 object-contain transition-all duration-500 ease-out ${
+        className={`absolute left-0 top-1/2 -translate-y-1/2 h-14 md:h-16 object-contain transition-all duration-500 ease-out ${
           scrolled ? "opacity-0 -translate-x-2 scale-95" : "opacity-100 translate-x-0 scale-100"
         }`}
       />
