@@ -29,7 +29,7 @@ export function Logo({ variant = "icon" }: { variant?: Variant }) {
 
   // scroll-morph: wordmark at top, icon after scrolling
   return (
-    <div className="relative h-14 w-56 md:h-16 md:w-72">
+    <div className="relative h-14 w-56 md:h-16 md:w-56 lg:w-72">
       <img
         src={text}
         alt="BrandBounce"
