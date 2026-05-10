@@ -16,11 +16,15 @@ export function Logo({ variant = "icon" }: { variant?: Variant }) {
   }, [variant]);
 
   if (variant === "icon") {
-    return <img src={icon} alt="BrandBounce" className="h-9 w-9 object-contain" width={36} height={36} />;
+    return (
+      <img src={icon} alt="BrandBounce" className="h-9 w-9 object-contain" width={36} height={36} />
+    );
   }
 
   if (variant === "wordmark") {
-    return <img src={text} alt="BrandBounce" className="h-20 md:h-24 object-contain" height={96} />;
+    return (
+      <img src={text} alt="BrandBounce" className="h-20 md:h-32 object-contain" height={128} />
+    );
   }
 
   // scroll-morph: wordmark at top, icon after scrolling
@@ -29,7 +33,7 @@ export function Logo({ variant = "icon" }: { variant?: Variant }) {
       <img
         src={text}
         alt="BrandBounce"
-        className={`absolute left-0 top-1/2 -translate-y-1/2 h-14 md:h-16 object-contain transition-all duration-500 ease-out ${
+        className={`absolute left-0 top-1/2 -translate-y-1/2 h-32 md:h-34 object-contain transition-all duration-500 ease-out ${
           scrolled ? "opacity-0 -translate-x-2 scale-95" : "opacity-100 translate-x-0 scale-100"
         }`}
       />
