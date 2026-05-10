@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { AsyncVideoWidget } from "@/components/AsyncVideoWidget";
 
 import appCss from "../styles.css?url";
 
@@ -59,6 +60,7 @@ function RootComponent() {
       <SiteHeader />
       <main className="flex-1"><Outlet /></main>
       <SiteFooter />
+      <AsyncVideoWidget />
     </div>
   );
 }
