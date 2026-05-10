@@ -1,45 +1,32 @@
-## Floating Async Video Chat Widget
+## Problem
 
-Add a persistent floating video bubble + action card to every page.
+At the tablet viewport (768–1023px), the header tries to fit:
+- A wide wordmark logo (`md:w-72` ≈ 288px)
+- 6 nav links with `gap-8` (Home, Services, Work, Process, About, Contact)
+- The "Send footage" CTA button
 
-### Files
+That's why everything looks bunched up. The nav switches from hidden to inline at the `md` breakpoint (768px), which is exactly where it has the least room.
 
-**New:** `src/components/AsyncVideoWidget.tsx`
-- Client component using `useState` for open/close + `useIsMobile` hook for responsive sizing.
-- Framer Motion for pop-up animation (already a common dep — will install `framer-motion` via `bun add` if missing).
-- Uses semantic tokens only (`primary`, `border`, `background`, `foreground`, `muted-foreground`).
+## Fix
 
-**Edit:** `src/routes/__root.tsx`
-- Mount `<AsyncVideoWidget />` inside `RootComponent` so it appears on every route.
+Two small, frontend-only changes in `src/components/SiteHeader.tsx` and `src/components/Logo.tsx`.
 
-### Widget structure
+### 1. Move the inline nav to the `lg` breakpoint, add a hamburger menu for tablet
 
-**Bubble (always visible)**
-- `fixed bottom-6 right-6 z-50`
-- 84px circle (72px on mobile), `border-[3px] border-primary`, `shadow-2xl`, `backdrop-blur-md`
-- `<video autoPlay muted loop playsInline>` filling the circle (`object-cover rounded-full`); placeholder src e.g. a sample MP4 (`https://cdn.coverr.co/videos/coverr-a-man-talking-to-camera-9461/1080p.mp4` or similar small loop).
-- Hover: `hover:scale-105 transition-transform`
-- Tooltip on hover: small pill to the left ("Ask me anything! 👋"), shown via `group-hover:opacity-100`.
+- Change the desktop nav from `hidden md:flex` to `hidden lg:flex`.
+- Below `lg` (so phones AND tablets), show a hamburger icon button on the right that opens a `Sheet` (already in `src/components/ui/sheet.tsx`) sliding in from the right with the same nav links stacked vertically, plus the "Send footage" CTA at the bottom.
+- Keep the CTA button visible inline only on `lg+`; on smaller screens it lives inside the sheet to free up header space.
 
-**Action card (toggled)**
-- Positioned `absolute bottom-[100px] right-0`, width ~280px.
-- Glassmorphism: `bg-background/60 backdrop-blur-xl border border-border/50 rounded-2xl shadow-xl p-5`.
-- Framer Motion `AnimatePresence` with scale+opacity+y transition for pop-up.
-- Close button (X icon) top-right, ghost style.
-- Title: "Let's start your project" — `font-display font-bold text-sm`.
-- Buttons (full width, stacked, gap-2):
-  1. WhatsApp — `variant="default"` (primary), `MessageCircle` icon, links to `https://wa.me/` placeholder.
-  2. Discovery call — `variant="outline"`, `Calendar` icon, links to Calendly placeholder.
-  3. Email Mehdi — `variant="ghost"`, `Mail` icon, `mailto:mehdi@brandbounce.com` placeholder.
+### 2. Shrink the scroll-morph logo footprint at `md`
 
-### Style alignment with SiteHeader
-- Same `rounded-md` on buttons (shadcn default).
-- Same backdrop-blur/translucent background pattern as the sticky header.
-- Same `font-medium` button label weight.
+- In `Logo.tsx`, the `scroll-morph` container is `md:h-16 md:w-72`. Reduce to something like `md:w-56 lg:w-72` so the wordmark doesn't dominate the tablet header. The wordmark image inside stays visually prominent but the reserved width shrinks.
 
-### Responsive
-- Mobile (`<768px`): bubble shrinks to 64px, bottom/right reduced to `bottom-4 right-4`, card width clamps to `calc(100vw - 2rem)`.
-- Tooltip hidden on touch devices (`hidden md:block`).
+## Result
 
-### Placeholders to confirm later
-- Video URL, WhatsApp number, Calendly link, email address — will use clearly-marked placeholders the user can swap.
+- Mobile (<768px): logo + hamburger (unchanged behavior, hamburger replaces nothing visible today).
+- Tablet (768–1023px): logo + hamburger — no more bunching.
+- Desktop (≥1024px): logo + full inline nav + CTA, same as today.
+
+## Out of scope
+
+No changes to footer, hero, AsyncVideoWidget, routing, or any business logic.
